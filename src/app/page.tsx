@@ -1,5 +1,7 @@
 import { Nav } from "@/components/nav";
 import { Hero } from "@/components/hero";
+import { Manifesto } from "@/components/manifesto";
+import { HowItWorks } from "@/components/how-it-works";
 import { MigrationPaths } from "@/components/migration-paths";
 import { Analyzer } from "@/components/analyzer";
 import { Converter } from "@/components/converter";
@@ -17,6 +19,10 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Divider />
+        <Manifesto />
+        <Divider />
+        <HowItWorks />
         <Divider />
         <MigrationPaths />
         <Divider />
@@ -40,4 +46,3 @@ export default function Home() {
 function Divider() {
   return <hr className="border-t border-neutral-200" />;
 }
-

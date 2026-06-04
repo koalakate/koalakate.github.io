@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LogoIntroWrapper } from "@/components/ui/logo-intro-wrapper";
+import { ContactModalProvider } from "@/lib/contact-modal-context";
+import { ContactModal } from "@/components/ui/contact-modal";
 
 export const metadata: Metadata = {
   title: "Antares — BI Migration Platform",
@@ -19,8 +21,11 @@ export default function RootLayout({
         className="min-h-full flex flex-col"
         style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
       >
-        <LogoIntroWrapper />
-        {children}
+        <ContactModalProvider>
+          <LogoIntroWrapper />
+          {children}
+          <ContactModal />
+        </ContactModalProvider>
       </body>
     </html>
   );
