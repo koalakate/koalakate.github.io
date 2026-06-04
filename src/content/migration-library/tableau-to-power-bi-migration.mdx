@@ -1,0 +1,66 @@
+---
+title: "Tableau to Power BI Migration — Complete Guide"
+excerpt: "Everything you need to know before migrating from Tableau to Power BI: assessment, planning, conversion patterns, and validation."
+tags: ["tableau migration", "power-bi", "guide"]
+date: "2025-09-01"
+---
+
+# Tableau to Power BI Migration — Complete Guide
+
+Migrating from Tableau to Power BI is one of the most common BI platform transitions. This guide walks through the full process: assessing your environment, planning the migration, converting workbooks, and validating outputs.
+
+## Why organisations migrate from Tableau to Power BI
+
+The most common drivers: Microsoft 365 consolidation, licensing costs, and deeper integration with Azure and the Power Platform ecosystem.
+
+## Step 1: Assess your Tableau environment
+
+Before writing a single line of DAX, you need to know what you're working with. A thorough assessment covers:
+
+- Number of workbooks, views, and data sources
+- Calculation complexity (LOD expressions, custom SQL, table calculations)
+- Usage patterns (which dashboards are actually used, which are stale)
+- Data connections (live vs. extract, cloud vs. on-prem)
+- Dependencies (cross-workbook references, shared data sources)
+
+Run Antares Analyzer to get this automatically — including a Migration Readiness Score and effort estimate per workbook.
+
+## Step 2: Prioritise your migration backlog
+
+Not everything needs to migrate at once. Prioritise based on:
+
+1. Business value (high-usage dashboards first)
+2. Conversion complexity (start with simpler workbooks to build momentum)
+3. Dependencies (migrate dependencies before dependents)
+
+## Step 3: Convert calculations
+
+The hardest part of any Tableau-to-Power BI migration is translating calculations. Key mappings:
+
+- **LOD expressions** → DAX CALCULATE + FILTER
+- **FIXED LOD** → DAX ALL or ALLEXCEPT
+- **Table calculations** → DAX window functions or iterators
+- **Calculated fields** → DAX measures or calculated columns (choose carefully)
+
+## Step 4: Rebuild or convert dashboards
+
+For most standard workbooks, Antares Converter automates 60–80% of the conversion. Complex LOD expressions and custom SQL require manual review.
+
+## Step 5: Validate outputs
+
+Never skip validation. For each migrated report:
+
+1. Run the source Tableau view and export data
+2. Run the Power BI report and export equivalent data
+3. Compare row counts, totals, and key metrics
+4. Document any intentional differences
+
+## Common pitfalls
+
+- **Tableau parameters ≠ Power BI parameters**: Power BI parameters are for data source configuration, not dynamic filtering. Use slicers or field parameters instead.
+- **Data blending**: Tableau's data blending doesn't have a direct equivalent. Use Power BI relationships or DAX LOOKUPVALUE.
+- **Context transitions**: FIXED LOD context transitions differ from DAX filter context. Test edge cases carefully.
+
+---
+
+*Ready to assess your Tableau environment? [Run the Analyzer free →](https://try.getantares.io)*

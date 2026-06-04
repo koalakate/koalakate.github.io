@@ -1,0 +1,46 @@
+---
+title: "Tableau to Power BI Migration Best Practices"
+excerpt: "Hard-won lessons from real Tableau to Power BI migrations: what works, what breaks, and how to run a clean project."
+tags: ["tableau migration", "power-bi", "best practices"]
+date: "2025-07-01"
+---
+
+# Tableau to Power BI Migration Best Practices
+
+These are lessons from real migration projects — patterns that consistently work and pitfalls that consistently bite teams.
+
+## Before you start
+
+**Run a proper assessment.** Teams that skip the assessment phase consistently underestimate scope by 2–3x. A readiness score per workbook, not just a workbook count, is the minimum you need before giving stakeholders a timeline.
+
+**Freeze your Tableau environment.** Once migration starts, stop making changes to source workbooks. Changes mid-migration invalidate your conversion work.
+
+**Establish a validation baseline.** Export key metric values from Tableau before you start. You'll need these to verify Power BI output.
+
+## During migration
+
+**Migrate dependencies first.** If Dashboard B uses a calculation from Shared Data Source A, migrate A before B. Map your dependencies before you start.
+
+**Don't convert everything — archive the stale content.** Analysis typically shows 20–40% of workbooks haven't been accessed in 6+ months. Migrate what's used; archive the rest.
+
+**Use a staging environment.** Never convert directly to production. Validate in staging first.
+
+**Document decisions.** When you make a deliberate choice (e.g., "we're replacing this custom SQL with a simpler DAX approach"), document it. Your future self will thank you.
+
+## Validation
+
+**Compare at the data level, not the visual level.** Visual similarity doesn't mean the numbers are right. Export underlying data from both source and target and compare row counts, totals, and key metrics.
+
+**Test edge cases**: null values, date boundaries, top-N filtering, cross-filtering interactions.
+
+**UAT with real users.** No amount of technical validation replaces end users working with the reports they know.
+
+## Cutover
+
+**Plan a parallel run period.** Run Tableau and Power BI side-by-side for 2–4 weeks before cutting over. This catches calculation discrepancies before they become production issues.
+
+**Have a rollback plan.** Know exactly how you'd roll back to Tableau if something goes wrong post-cutover.
+
+---
+
+*Antares Analyzer surfaces the risks before you start. [Run it free →](https://try.getantares.io)*

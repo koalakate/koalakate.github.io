@@ -1,0 +1,70 @@
+---
+title: "Tableau Calculated Fields to DAX"
+excerpt: "How to translate Tableau calculated fields and measures to DAX for Power BI, including string functions, date logic, and conditional calculations."
+tags: ["tableau migration", "dax", "calculated fields", "power-bi"]
+date: "2025-08-01"
+---
+
+# Tableau Calculated Fields to DAX
+
+Tableau calculated fields translate to either DAX measures or calculated columns in Power BI. Choosing correctly matters for performance and correctness.
+
+## Measures vs. calculated columns
+
+**Use a DAX measure when:** the calculation aggregates data (SUM, AVG, COUNT) or depends on filter context.
+
+**Use a calculated column when:** the calculation is row-level and doesn't depend on aggregation (string manipulation, date extraction, static classification).
+
+## Common calculation patterns
+
+### String functions
+
+| Tableau | DAX |
+|---------|-----|
+| `STR([Value])` | `FORMAT([Value], "General Number")` |
+| `LEN([String])` | `LEN([String])` |
+| `CONTAINS([String], "text")` | `CONTAINSSTRING([String], "text")` |
+| `LEFT([String], 3)` | `LEFT([String], 3)` |
+| `TRIM([String])` | `TRIM([String])` |
+
+### Date functions
+
+| Tableau | DAX |
+|---------|-----|
+| `DATEPART('year', [Date])` | `YEAR([Date])` |
+| `DATEDIFF('day', [Start], [End])` | `DATEDIFF([Start], [End], DAY)` |
+| `DATEADD('month', 1, [Date])` | `EDATE([Date], 1)` |
+| `TODAY()` | `TODAY()` |
+
+### Conditional logic
+
+Tableau:
+```
+IF [Sales] > 10000 THEN "High"
+ELSEIF [Sales] > 5000 THEN "Medium"
+ELSE "Low"
+END
+```
+
+DAX:
+```
+Sales Tier =
+SWITCH(
+    TRUE(),
+    [Sales] > 10000, "High",
+    [Sales] > 5000, "Medium",
+    "Low"
+)
+```
+
+## Table calculations
+
+Tableau table calculations (RUNNING_SUM, WINDOW_AVG, RANK, etc.) require special handling. Most translate to DAX window functions available in Power BI (introduced 2023):
+
+- `RUNNING_SUM` → `RUNNINGSUM`
+- `WINDOW_AVG` → `MOVINGAVERAGE`
+- `RANK` → `RANKX`
+
+---
+
+*Antares automatically maps standard calculated fields during conversion. Complex ones are flagged with suggested DAX. [Try it free →](https://try.getantares.io)*

@@ -5,7 +5,7 @@ import { HowItWorks } from "@/components/how-it-works";
 import { MigrationPaths } from "@/components/migration-paths";
 import { Analyzer } from "@/components/analyzer";
 import { Converter } from "@/components/converter";
-import { Services } from "@/components/services";
+import { Partners } from "@/components/services";
 import { Pricing } from "@/components/pricing";
 import { Guides } from "@/components/guides";
 import { Cta } from "@/components/cta";
@@ -30,7 +30,7 @@ export default function Home() {
         <Divider />
         <Converter />
         <Divider />
-        <Services />
+        <Partners />
         <Divider />
         <Pricing />
         <Divider />

@@ -1,0 +1,58 @@
+---
+title: "BI Migration Planning Guide"
+excerpt: "How to plan a Tableau migration project: scoping, stakeholder alignment, timeline estimation, and risk management."
+tags: ["tableau migration", "planning", "project management"]
+date: "2025-07-15"
+---
+
+# BI Migration Planning Guide
+
+A BI migration that starts without a proper plan almost always runs over time, over budget, or both. This guide covers the planning phase from initial scoping to execution roadmap.
+
+## The planning problem
+
+Most BI migrations underestimate scope. The typical mistake: counting workbooks but not accounting for calculation complexity, data source dependencies, or user training needs.
+
+**You cannot estimate what you haven't analyzed.** Run your environment assessment before committing to a timeline.
+
+## Scoping your migration
+
+A complete scope covers:
+
+1. **Inventory**: Total workbooks, views, calculations, data sources
+2. **Complexity tiers**: Categorise workbooks by migration effort (auto, manual review, complex)
+3. **Business criticality**: Which dashboards are mission-critical vs. nice-to-have
+4. **Dependencies**: What depends on what — migrate dependencies first
+5. **User base**: How many users, which departments, what training is needed
+
+## Effort estimation
+
+Use your complexity breakdown to estimate effort:
+
+| Tier | Description | Estimated hours per workbook |
+|------|-------------|------------------------------|
+| Auto | Simple charts, basic calculations | 0.5–1h (validation only) |
+| Manual review | LOD expressions, custom SQL | 2–4h |
+| Complex | Heavy LOD, data blending, custom extensions | 6–16h |
+
+## Timeline model
+
+A typical phased approach:
+
+- **Phase 1 (weeks 1–2)**: Environment assessment + planning
+- **Phase 2 (weeks 3–6)**: Pilot migration (10–20 workbooks, mix of complexity)
+- **Phase 3 (weeks 7–N)**: Full migration in priority batches
+- **Phase 4**: UAT, validation, cutover
+
+## Risk management
+
+Top migration risks and mitigations:
+
+- **Calculation errors**: Validate every migrated report against source data
+- **Scope creep**: Freeze scope before conversion begins; handle additions in Phase 2
+- **User adoption**: Involve end users in UAT; train before cutover
+- **Data source changes**: Freeze data sources during migration unless intentional
+
+---
+
+*Get your environment assessment and effort estimate automatically. [Run the Analyzer →](https://try.getantares.io)*

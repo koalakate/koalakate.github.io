@@ -1,0 +1,72 @@
+---
+title: "Tableau LOD Expressions to DAX"
+excerpt: "A practical translation guide for converting Tableau LOD expressions (FIXED, INCLUDE, EXCLUDE) to their DAX equivalents in Power BI."
+tags: ["tableau migration", "dax", "lod", "power-bi"]
+date: "2025-08-15"
+---
+
+# Tableau LOD Expressions to DAX
+
+LOD (Level of Detail) expressions are one of the most powerful features in Tableau — and one of the most complex to translate to Power BI. This guide covers the most common patterns.
+
+## Understanding the conceptual difference
+
+In Tableau, LOD expressions explicitly define the granularity of a calculation. In DAX, you achieve the same effect by manipulating filter context using CALCULATE, ALL, ALLEXCEPT, and related functions.
+
+## FIXED LOD → DAX
+
+Tableau:
+```
+{ FIXED [Customer] : SUM([Sales]) }
+```
+
+DAX equivalent:
+```
+Customer Sales =
+CALCULATE(
+    SUM(Orders[Sales]),
+    ALLEXCEPT(Customers, Customers[Customer])
+)
+```
+
+## INCLUDE LOD → DAX
+
+Tableau:
+```
+{ INCLUDE [Order ID] : AVG([Profit]) }
+```
+
+DAX equivalent (using AVERAGEX):
+```
+Avg Profit per Order =
+AVERAGEX(
+    VALUES(Orders[Order ID]),
+    CALCULATE(SUM(Orders[Profit]))
+)
+```
+
+## EXCLUDE LOD → DAX
+
+Tableau:
+```
+{ EXCLUDE [Region] : SUM([Sales]) }
+```
+
+DAX equivalent:
+```
+Sales Ex Region =
+CALCULATE(
+    SUM(Orders[Sales]),
+    ALL(Geography[Region])
+)
+```
+
+## Common gotchas
+
+- **FIXED vs. row context**: DAX ALLEXCEPT removes all filters except the specified columns. This is usually correct for FIXED LOD but verify with edge cases.
+- **Nested LODs**: Nested LOD expressions in Tableau often require intermediate calculated tables in Power BI.
+- **Filtering on LOD results**: Tableau allows filtering on LOD results via context filters. In DAX this requires measure-based filtering or table functions.
+
+---
+
+*Let Antares analyze your LOD expressions and flag the complex cases automatically. [Run the Analyzer →](https://try.getantares.io)*

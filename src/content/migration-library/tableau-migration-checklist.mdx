@@ -1,0 +1,63 @@
+---
+title: "BI Migration Checklist"
+excerpt: "A practical checklist for Tableau to Power BI migrations — covering assessment, conversion, validation, and cutover."
+tags: ["tableau migration", "checklist", "power-bi"]
+date: "2025-06-15"
+---
+
+# BI Migration Checklist
+
+Use this checklist to track progress through your Tableau to Power BI migration.
+
+## Assessment
+
+- [ ] Run environment scan (workbook count, view count, data sources)
+- [ ] Generate complexity breakdown (auto / manual review / complex)
+- [ ] Identify high-usage vs. stale content
+- [ ] Map workbook dependencies
+- [ ] Get Migration Readiness Score per workbook
+- [ ] Export effort estimate and present to stakeholders
+- [ ] Agree on migration scope (what's in, what's deferred, what's archived)
+
+## Planning
+
+- [ ] Define phased migration plan with milestones
+- [ ] Identify pilot workbooks (mix of complexity tiers)
+- [ ] Freeze Tableau environment (no changes during migration)
+- [ ] Establish validation baseline (export key metrics from Tableau)
+- [ ] Set up Power BI staging environment
+- [ ] Confirm data source access for target platform
+
+## Conversion
+
+- [ ] Convert pilot batch
+- [ ] Validate pilot batch (compare to baseline)
+- [ ] Resolve flagged items from pilot
+- [ ] Sign off on pilot
+- [ ] Convert remaining batches in priority order
+- [ ] Validate each batch before proceeding to next
+
+## Validation
+
+- [ ] Row count matches between source and target
+- [ ] Key metric totals match (within agreed tolerance)
+- [ ] Filters behave correctly
+- [ ] Cross-filter interactions work as expected
+- [ ] Null/empty value handling is correct
+- [ ] Date logic is correct (fiscal years, week numbering, etc.)
+- [ ] Row-level security works for all user groups
+- [ ] UAT completed with representative end users
+- [ ] UAT sign-off obtained
+
+## Cutover
+
+- [ ] Communication sent to all report users
+- [ ] Training sessions completed
+- [ ] Parallel run period defined
+- [ ] Go-live date confirmed
+- [ ] Rollback plan documented
+- [ ] Post-cutover monitoring plan in place
+
+---
+
+*Use Antares Analyzer to complete the assessment phase automatically. [Run it free →](https://try.getantares.io)*
