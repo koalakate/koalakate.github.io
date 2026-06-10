@@ -1,10 +1,9 @@
 import { GradientHeading } from "@/components/ui/gradient-heading";
+import { CtaButton } from "@/components/ui/cta-button";
 import {
   TextureCard,
   TextureCardContent,
-  TextureCardHeader,
   TextureCardTitle,
-  TextureSeparator,
 } from "@/components/ui/texture-card";
 
 const tiers = [
@@ -39,10 +38,10 @@ const tiers = [
       "Validation against source data",
     ],
     cta: {
-      text: "Get in touch",
+      text: "Get in Touch",
       href: "mailto:hello@getantares.io?subject=Converter License",
     },
-    primary: true,
+    primary: false,
     featured: true,
   },
   {
@@ -50,16 +49,16 @@ const tiers = [
     title: "End-to-End Migration",
     price: "Custom",
     description:
-      "Full professional delivery. Strategy, conversion, testing, deployment, and change management.",
+      "Full-service migration with our delivery partners — strategy, conversion, testing, deployment, and change management.",
     features: [
       "Everything in Converter",
-      "Dedicated migration team",
+      "Dedicated partner delivery team",
       "Custom migration strategy",
-      "Change management support",
+      "Change management & training",
       "Post-migration optimization",
     ],
     cta: {
-      text: "Contact us",
+      text: "Get in Touch",
       href: "mailto:hello@getantares.io?subject=End-to-End Migration",
     },
     primary: false,
@@ -86,13 +85,13 @@ export function Pricing() {
           {tiers.map((tier) => (
             <TextureCard key={tier.title}>
               <TextureCardContent className="p-8 lg:p-10 flex flex-col flex-1">
-                <p className="text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-neutral-400 mb-2">
+                <p className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-500 mb-2">
                   {tier.label}
                 </p>
                 <TextureCardTitle className="!pl-0 !text-xl">
                   {tier.title}
                 </TextureCardTitle>
-                <p className="text-2xl font-bold text-[#3B82F6] mt-2 mb-5">
+                <p className="text-2xl font-bold text-brand mt-2 mb-5">
                   {tier.price}
                 </p>
                 <p className="text-[0.9rem] text-neutral-500 mb-6">
@@ -104,7 +103,7 @@ export function Pricing() {
                       key={feature}
                       className="text-[0.9rem] text-neutral-600 pl-5 relative"
                     >
-                      <span className="absolute left-0 text-green-500 font-semibold">
+                      <span aria-hidden="true" className="absolute left-0 text-green-500 font-semibold">
                         ✓
                       </span>
                       {feature}
@@ -113,16 +112,13 @@ export function Pricing() {
                 </ul>
                 {/* mt-auto aligns all buttons to the same bottom position */}
                 <div className="mt-auto pt-8">
-                  <a
+                  <CtaButton
                     href={tier.cta.href}
-                    className={`flex items-center justify-center w-full font-semibold py-3 px-6 rounded transition-all ${
-                      tier.primary
-                        ? "bg-[#3B82F6] hover:bg-[#2563EB] text-white"
-                        : "bg-transparent border-[1.5px] border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white"
-                    }`}
+                    variant={tier.primary ? "primary" : "secondary"}
+                    className="w-full px-6"
                   >
                     {tier.cta.text}
-                  </a>
+                  </CtaButton>
                 </div>
               </TextureCardContent>
             </TextureCard>

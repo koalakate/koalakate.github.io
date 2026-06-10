@@ -30,7 +30,7 @@ const TIER_DOT: Record<Tier, string> = {
 const TIER_CARD: Record<Tier, string> = {
   now: "bg-neutral-950 text-white",
   year: "bg-neutral-800 text-white",
-  soon: "bg-neutral-100 text-neutral-500 border border-neutral-200",
+  soon: "bg-neutral-100 text-neutral-700 border border-neutral-200",
 };
 
 export function MigrationPaths() {
@@ -39,10 +39,10 @@ export function MigrationPaths() {
   return (
     <section id="capabilities" className="py-14 lg:py-[120px]">
       <div className="max-w-[1200px] mx-auto px-6">
-        <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-neutral-400 mb-4">
+        <p className="text-xs font-medium tracking-[0.08em] uppercase text-neutral-500 mb-6">
           Migration Paths
         </p>
-        <h2 className="text-[clamp(1.8rem,3.5vw,2.4rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-3">
+        <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-3">
           Where are you headed?
         </h2>
         <p className="text-[0.95rem] text-neutral-500 leading-[1.55] mb-10 max-w-[500px]">
@@ -70,7 +70,7 @@ export function MigrationPaths() {
 
           {/* Custom path CTA */}
           <div className="flex flex-col justify-between p-6 bg-neutral-50 border border-neutral-200 rounded-2xl min-h-[180px]">
-            <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-neutral-400">
+            <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-neutral-500">
               Custom path?
             </p>
             <div>
@@ -82,9 +82,9 @@ export function MigrationPaths() {
               </p>
               <button
                 onClick={openModal}
-                className="inline-flex items-center gap-1.5 text-[0.82rem] font-bold tracking-[0.06em] uppercase text-neutral-900 border-b border-neutral-900 pb-px hover:text-[#3B82F6] hover:border-[#3B82F6] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-[0.82rem] font-bold tracking-[0.06em] uppercase text-neutral-900 border-b border-neutral-900 pb-px hover:text-brand hover:border-brand transition-colors cursor-pointer"
               >
-                Get in touch →
+                Get in Touch →
               </button>
             </div>
           </div>

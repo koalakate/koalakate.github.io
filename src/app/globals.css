@@ -37,6 +37,8 @@
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -51,6 +53,9 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  /* Brand accent — single source of truth (was hardcoded #3B82F6 ~30×). */
+  --brand: #3b82f6;
+  --brand-hover: #2563eb;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -148,5 +153,12 @@
   }
   html {
     @apply font-sans;
+  }
+  /* Consistent brand focus ring for keyboard users (no element defined one before). */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
   }
 }

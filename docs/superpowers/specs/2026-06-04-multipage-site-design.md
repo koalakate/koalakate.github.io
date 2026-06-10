@@ -116,9 +116,22 @@ Keep existing section. Add link "Learn more about Analyzer →" pointing to `/an
 
 Keep existing section. Add link "Learn more about Converter →" pointing to `/converter`.
 
-### 2.8 Services
+### 2.8 Services → Partners
 
-No changes.
+**Decision:** Antares does not offer services under its own brand. The section is renamed **"Partners"** and reframed as a referral/handoff block.
+
+**Content:**
+- Heading: "Need full-service delivery?" (or "Looking for full-service migration support?")
+- Short copy: "Antares automates the technical conversion — our delivery partners handle end-to-end project management, change management, and custom work."
+- Partner tiles: **T1A**, **OBV**, and any other certified partners (logo + one-line description + link/CTA per tile)
+- Secondary CTA (if no direct partner link available): "Want full-service migration? Contact our partner" → opens Get in Touch modal with pre-filled subject / note
+
+**Design:**
+- Grid of partner cards (logo, name, short descriptor), same rounded-xl / shadow style as the rest of v2
+- No Antares branding implies the delivery — copy must clearly attribute work to the partner
+- Optional "Certified Partner" badge per tile
+
+**Nav / footer:** rename any "Services" references to "Partners".
 
 ### 2.9 Pricing
 
@@ -349,4 +362,4 @@ src/content/
 - Search within Migration Library
 - Comment system
 - Pricing page changes
-- Services page changes
+- Dedicated /partners page (partner cards live on home for now)

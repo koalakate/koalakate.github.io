@@ -21,10 +21,10 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/blog/"
+                  href="/migration-library"
                   className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
                 >
-                  Blog
+                  Migration Library
                 </a>
               </li>
               <li>

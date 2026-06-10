@@ -29,10 +29,10 @@ export function Guides() {
             <Link
               key={guide.href}
               href={guide.href}
-              className={`group flex items-center justify-between py-5 border-b border-neutral-200 text-neutral-900 font-medium text-[1.05rem] no-underline transition-colors hover:text-[#3B82F6] ${i === 0 ? "border-t" : ""}`}
+              className={`group flex items-center justify-between py-5 border-b border-neutral-200 text-neutral-900 font-medium text-[1.05rem] no-underline transition-colors hover:text-brand ${i === 0 ? "border-t" : ""}`}
             >
               <span>{guide.title}</span>
-              <span className="text-neutral-400 text-xl transition-all group-hover:text-[#3B82F6] group-hover:translate-x-1">→</span>
+              <span className="text-neutral-400 text-xl transition-all group-hover:text-brand group-hover:translate-x-1">→</span>
             </Link>
           ))}
         </div>
@@ -40,7 +40,7 @@ export function Guides() {
         <div className="mt-8">
           <Link
             href="/migration-library"
-            className="text-sm font-semibold text-[#3B82F6] hover:text-[#2563EB] transition-colors"
+            className="text-sm font-semibold text-brand hover:text-brand-hover transition-colors"
           >
             View all articles →
           </Link>

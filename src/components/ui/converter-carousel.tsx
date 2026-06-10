@@ -112,7 +112,7 @@ function StepNav({
               className={cn(
                 "flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[0.6rem] font-bold transition-colors",
                 done    && "bg-neutral-500 text-white",
-                active  && "bg-[#3B82F6] text-white",
+                active  && "bg-brand text-white",
                 !done && !active && "bg-white/10 text-neutral-400"
               )}
             >

@@ -2,22 +2,22 @@ const STEPS = [
   {
     num: "01",
     title: "Scan",
-    description: "Connect Tableau or upload workbooks. Fast inventory of your full BI environment — every dashboard, calculation, and data source.",
+    description: "Connect Tableau or upload workbooks for a fast inventory of every dashboard, calculation, and data source.",
   },
   {
     num: "02",
     title: "Analyze",
-    description: "Surface blockers, usage patterns, and feature-level risk. Get a Migration Readiness Score with complexity scoring per workbook.",
+    description: "Surface blockers, usage, and feature-level risk — with a Migration Readiness Score per workbook.",
   },
   {
     num: "03",
     title: "Plan",
-    description: "Readiness score, timeline estimate, and execution roadmap. Data-backed plans that align stakeholders before a single line of code moves.",
+    description: "A timeline and execution roadmap that align stakeholders before any code moves.",
   },
   {
     num: "04",
     title: "Convert",
-    description: "Automate repeatable conversion and validate outputs. 70% less manual work — Antares handles what's mechanical so your team handles what isn't.",
+    description: "Automate the repeatable conversion and validate outputs — Antares handles what's mechanical so your team handles what isn't.",
   },
 ] as const;
 
@@ -28,7 +28,7 @@ export function HowItWorks() {
         <p className="text-xs font-medium tracking-[0.08em] uppercase text-neutral-500 mb-6">
           How Antares Works
         </p>
-        <h2 className="text-[clamp(1.8rem,3.5vw,2.4rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-12">
+        <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-12">
           A structured process.<br />No surprises.
         </h2>
 

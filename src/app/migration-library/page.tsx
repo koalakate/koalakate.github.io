@@ -1,5 +1,6 @@
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { Cta } from "@/components/cta";
 import { TextureOverlay } from "@/components/ui/texture-overlay";
 import { getAllArticles } from "@/lib/articles";
 import Link from "next/link";
@@ -50,7 +51,7 @@ export default function MigrationLibraryPage() {
                     </span>
                   ))}
                 </div>
-                <h2 className="text-lg font-bold text-neutral-900 leading-snug mb-3 group-hover:text-[#3B82F6] transition-colors">
+                <h2 className="text-lg font-bold text-neutral-900 leading-snug mb-3 group-hover:text-brand transition-colors">
                   {article.title}
                 </h2>
                 <p className="text-sm text-neutral-500 leading-[1.6] mb-4">
@@ -67,6 +68,7 @@ export default function MigrationLibraryPage() {
             ))}
           </div>
         </div>
+        <Cta />
       </main>
       <Footer />
     </>

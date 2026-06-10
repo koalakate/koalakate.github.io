@@ -1,3 +1,5 @@
+import { CtaButton } from "@/components/ui/cta-button";
+
 export function Analyzer() {
   const screenshot = (
     // eslint-disable-next-line @next/next/no-img-element
@@ -19,7 +21,7 @@ export function Analyzer() {
             <p className="text-xs font-medium tracking-[0.08em] uppercase text-neutral-500 mb-6">
               Analyzer
             </p>
-            <h2 className="text-[clamp(2rem,4vw,2.8rem)] font-bold text-neutral-950 leading-[1.08] tracking-[-0.03em]">
+            <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em]">
               See what you&apos;re migrating
             </h2>
             <p className="text-neutral-500 mt-5 max-w-[440px] leading-relaxed">
@@ -38,24 +40,24 @@ export function Analyzer() {
             <ul className="flex flex-col gap-3 mt-6 lg:mt-10">
               {[
                 "Complexity scoring for every dashboard",
-                "Analytics to prioritize high-value content",
-                "AI priorities based on impact vs. effort",
+                "Usage analytics to surface high-value content",
+                "Prioritization by impact vs. effort",
                 "Dependency mapping to avoid surprises",
-                "Accurate effort estimation for planning",
+                "Effort estimates you can plan around",
               ].map((item) => (
                 <li key={item} className="flex items-baseline gap-3 text-neutral-700 leading-[1.5]">
-                  <span className="text-neutral-400 text-[0.9em] shrink-0">⟶</span>
+                  <span aria-hidden="true" className="text-neutral-400 text-[0.9em] shrink-0">⟶</span>
                   {item}
                 </li>
               ))}
             </ul>
-            <div className="mt-10">
-              <a
-                href="https://try.getantares.io"
-                className="flex items-center justify-center gap-2 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold text-base px-8 py-3 rounded transition-all hover:-translate-y-px w-full sm:w-auto sm:inline-flex"
-              >
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <CtaButton href="https://try.getantares.io" className="w-full sm:w-auto">
                 Run the Analyzer — Free
-              </a>
+              </CtaButton>
+              <CtaButton variant="secondary" href="/analyzer" className="w-full sm:w-auto">
+                Explore the Analyzer →
+              </CtaButton>
             </div>
           </div>
 

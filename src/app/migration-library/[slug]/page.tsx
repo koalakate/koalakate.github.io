@@ -1,5 +1,6 @@
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { Cta } from "@/components/cta";
 import { TextureOverlay } from "@/components/ui/texture-overlay";
 import { getArticle, getAllSlugs, getAllArticles } from "@/lib/articles";
 import Link from "next/link";
@@ -72,7 +73,7 @@ export default async function ArticlePage({ params }: Props) {
                   [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-neutral-900 [&_h2]:tracking-tight [&_h2]:mt-12 [&_h2]:mb-4
                   [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-neutral-900 [&_h3]:mt-8 [&_h3]:mb-3
                   [&_p]:text-neutral-700 [&_p]:leading-[1.75] [&_p]:mb-5
-                  [&_a]:text-[#3B82F6] [&_a]:no-underline [&_a:hover]:underline
+                  [&_a]:text-brand [&_a]:no-underline [&_a:hover]:underline
                   [&_strong]:text-neutral-900 [&_strong]:font-semibold
                   [&_code]:bg-neutral-100 [&_code]:text-neutral-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
                   [&_pre]:bg-neutral-950 [&_pre]:text-neutral-100 [&_pre]:rounded-xl [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:my-6
@@ -83,7 +84,7 @@ export default async function ArticlePage({ params }: Props) {
                   [&_th]:text-left [&_th]:font-semibold [&_th]:text-neutral-900 [&_th]:pb-2 [&_th]:border-b [&_th]:border-neutral-200
                   [&_td]:py-2.5 [&_td]:border-b [&_td]:border-neutral-100 [&_td]:text-neutral-600
                   [&_hr]:border-neutral-200 [&_hr]:my-10
-                  [&_blockquote]:border-l-2 [&_blockquote]:border-[#3B82F6] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-600"
+                  [&_blockquote]:border-l-2 [&_blockquote]:border-brand [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-600"
                 dangerouslySetInnerHTML={{ __html: article.contentHtml }}
               />
             </article>
@@ -100,7 +101,7 @@ export default async function ArticlePage({ params }: Props) {
                   </p>
                   <a
                     href="https://try.getantares.io"
-                    className="flex items-center justify-center w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold text-sm py-2.5 rounded-lg transition-colors"
+                    className="flex items-center justify-center w-full bg-brand hover:bg-brand-hover text-white font-semibold text-sm py-2.5 rounded transition-colors"
                   >
                     Run the Analyzer →
                   </a>
@@ -115,7 +116,7 @@ export default async function ArticlePage({ params }: Props) {
                       <Link
                         key={a.slug}
                         href={`/migration-library/${a.slug}`}
-                        className="text-sm font-medium text-neutral-700 hover:text-[#3B82F6] transition-colors leading-snug no-underline"
+                        className="text-sm font-medium text-neutral-700 hover:text-brand transition-colors leading-snug no-underline"
                       >
                         {a.title}
                       </Link>
@@ -127,6 +128,7 @@ export default async function ArticlePage({ params }: Props) {
 
           </div>
         </div>
+        <Cta />
       </main>
       <Footer />
     </>

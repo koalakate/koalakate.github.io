@@ -52,13 +52,13 @@ export function Nav() {
           <div className="flex items-center gap-3">
             <button
               onClick={openModal}
-              className="hidden md:inline-flex text-sm font-semibold text-neutral-900 border-[1.5px] border-neutral-300 hover:border-neutral-900 px-4 py-2 rounded-md transition-colors cursor-pointer"
+              className="hidden md:inline-flex text-sm font-semibold text-neutral-900 border-[1.5px] border-neutral-300 hover:border-neutral-900 px-4 py-2 rounded transition-colors cursor-pointer"
             >
               Get in Touch
             </button>
             <a
               href="https://try.getantares.io"
-              className="hidden md:inline-flex text-sm font-semibold text-white bg-[#3B82F6] hover:bg-[#2563EB] px-5 py-2.5 rounded-md transition-colors"
+              className="hidden md:inline-flex text-sm font-semibold text-white bg-brand hover:bg-brand-hover px-5 py-2.5 rounded transition-colors"
             >
               Run the Analyzer
             </a>
@@ -110,13 +110,13 @@ export function Nav() {
         <div className="px-6 pb-10 pt-6 flex flex-col gap-3">
           <button
             onClick={() => { setOpen(false); openModal(); }}
-            className="flex items-center justify-center w-full text-base font-semibold text-neutral-900 border-[1.5px] border-neutral-300 px-5 py-4 rounded-md transition-colors cursor-pointer"
+            className="flex items-center justify-center w-full text-base font-semibold text-neutral-900 border-[1.5px] border-neutral-300 hover:border-neutral-900 px-5 py-4 rounded transition-colors cursor-pointer"
           >
             Get in Touch
           </button>
           <a
             href="https://try.getantares.io"
-            className="flex items-center justify-center w-full text-base font-semibold text-white bg-[#3B82F6] hover:bg-[#2563EB] px-5 py-4 rounded-md transition-colors"
+            className="flex items-center justify-center w-full text-base font-semibold text-white bg-brand hover:bg-brand-hover px-5 py-4 rounded transition-colors"
           >
             Run the Analyzer — Free
           </a>
