@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   StatusBadge,
   DifficultyPill,
-  statusDot,
+  StatusIcon,
   type Tier,
   type Difficulty,
 } from "@/components/ui/platform-bits";
@@ -105,7 +105,7 @@ export function AnalysisCoverage() {
         </p>
         <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-3">
           Every platform&apos;s hard parts —{" "}
-          <span className="text-neutral-400">accounted for.</span>
+          <span className="text-neutral-600">accounted for.</span>
         </h2>
         <p className="text-[0.95rem] text-neutral-500 leading-[1.6] mb-8 max-w-[560px]">
           Each BI platform has its own quirks. The Analyzer knows them — and
@@ -127,21 +127,22 @@ export function AnalysisCoverage() {
                     : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400"
                 }`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${statusDot(c.tier)}`} />
+                <StatusIcon tier={c.tier} />
                 {c.platform}
               </button>
             );
           })}
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={platform}
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={prefersReducedMotion ? {} : { opacity: 0, y: -8 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: [0.23, 1, 0.32, 1] }}
-          >
+        {/* Keyed swap (no AnimatePresence mode="wait"): the old panel is replaced
+            synchronously by the new one — no collapse-to-zero gap that made the
+            page jump when platforms have different numbers of features. */}
+        <motion.div
+          key={platform}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: [0.23, 1, 0.32, 1] }}
+        >
             {/* Roadmap notice for non-live platforms */}
             {active.tier !== "now" && (
               <div className="flex items-center gap-3 mb-6 text-[0.82rem] text-neutral-500">
@@ -174,8 +175,7 @@ export function AnalysisCoverage() {
                 );
               })}
             </div>
-          </motion.div>
-        </AnimatePresence>
+        </motion.div>
 
         {/* Platform-agnostic baseline */}
         <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.8rem] text-neutral-500">

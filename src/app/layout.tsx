@@ -7,7 +7,7 @@ import { ContactModal } from "@/components/ui/contact-modal";
 export const metadata: Metadata = {
   title: "Antares — BI Migration Platform",
   description:
-    "Analyze risk. Automate conversion. Migrate with confidence. Tableau to Power BI, Databricks AI/BI, and SAS VA — 70% faster.",
+    "Analyze risk. Automate conversion. Migrate with confidence. Tableau to Power BI, Databricks AI/BI, and SAS VA — in weeks, not years.",
 };
 
 export default function RootLayout({

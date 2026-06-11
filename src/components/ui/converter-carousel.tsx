@@ -49,7 +49,7 @@ const STEPS = [
   {
     num: 3,
     label: "Fine Tuning",
-    title: "Minimal Polish — 70% Less Work",
+    title: "Minimal Polish — Days, Not Weeks",
     description:
       "Expert time spent on brand alignment and edge cases only. Not rebuilding from scratch.",
     img: "/screenshots/Manual Fine-tuned Result.svg",

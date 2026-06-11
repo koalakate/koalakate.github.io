@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
+import { withBase } from "@/lib/base-path";
 
 /**
  * Shared marketing call-to-action button. Renders an <a> when `href` is given,
@@ -34,7 +35,8 @@ export function CtaButton({
   const classes = cn(BASE, VARIANTS[variant], className);
 
   if (props.href !== undefined) {
-    return <a className={classes} {...(props as AnchorProps)} />;
+    const anchorProps = props as AnchorProps;
+    return <a className={classes} {...anchorProps} href={withBase(anchorProps.href)} />;
   }
   return (
     <button type="button" className={cn(classes, "cursor-pointer")} {...(props as ButtonProps)} />

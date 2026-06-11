@@ -1,3 +1,5 @@
+import { withBase } from "@/lib/base-path";
+
 const partners = [
   {
     id: "t1a",
@@ -41,9 +43,9 @@ export function Partners() {
                 <div className="flex items-center gap-4 mb-5">
                   <div className="flex items-center justify-center h-12 px-4 rounded-lg bg-neutral-900 shrink-0">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={partner.logo} alt={`${partner.name} logo`} className="h-5 w-auto" />
+                    <img src={withBase(partner.logo)} alt={`${partner.name} logo`} className="h-5 w-auto" />
                   </div>
-                  <p className="text-xs font-medium uppercase tracking-[0.06em] text-neutral-400">
+                  <p className="text-xs font-medium uppercase tracking-[0.06em] text-neutral-600">
                     {partner.tag}
                   </p>
                 </div>

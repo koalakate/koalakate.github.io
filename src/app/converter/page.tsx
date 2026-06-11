@@ -40,7 +40,7 @@ export default function ConverterPage() {
           <div className="max-w-[1200px] mx-auto px-6">
             <p className="text-xs font-medium tracking-[0.08em] uppercase text-neutral-500 mb-6">Converter</p>
             <h1 className="text-[clamp(2.4rem,5vw,4rem)] font-bold text-neutral-900 leading-[1.05] tracking-[-0.04em] max-w-[700px]">
-              Automated conversion.<br />70% less manual work.
+              Automated conversion.<br />Days, not weeks.
             </h1>
             <p className="text-[1.1rem] text-neutral-500 leading-[1.6] mt-5 max-w-[520px]">
               Antares handles the repeatable parts so your team focuses on what actually needs a human.

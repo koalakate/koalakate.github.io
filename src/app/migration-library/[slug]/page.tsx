@@ -60,11 +60,12 @@ export default async function ArticlePage({ params }: Props) {
               <h1 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-900 leading-[1.08] tracking-[-0.03em] mb-4">
                 {article.title}
               </h1>
-              <p className="text-xs text-neutral-400 mb-10">
+              <p className="text-xs text-neutral-600 mb-10">
                 {new Date(article.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
+                  timeZone: "UTC",
                 })}
               </p>
 

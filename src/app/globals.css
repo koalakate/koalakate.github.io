@@ -53,9 +53,10 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-  /* Brand accent — single source of truth (was hardcoded #3B82F6 ~30×). */
-  --brand: #3b82f6;
-  --brand-hover: #2563eb;
+  /* Brand accent — single source of truth (was hardcoded #3B82F6 ~30×).
+     Darkened to clear WCAG AA 4.5:1 with white text/links (was #3b82f6 @ 3.67:1). */
+  --brand: #2563eb;
+  --brand-hover: #1d4ed8;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);

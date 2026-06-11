@@ -17,13 +17,13 @@ export function Hero() {
               BI Migration —<br />
               from analysis
               <br />
-              to delivery,
+              to production,
               <br />
               automated.
             </h1>
             <p className="text-[clamp(1rem,2vw,1.25rem)] font-medium text-neutral-500 leading-[1.5] tracking-[-0.01em] max-w-[480px] mt-5">
               Antares analyzes your estate, auto-converts dashboards, and backs
-              it with expert delivery — 70% faster than a manual rebuild.
+              it with expert delivery — migrations in weeks, not years.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <CtaButton href="https://try.getantares.io" className="w-full sm:w-auto">

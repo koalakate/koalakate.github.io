@@ -3,11 +3,12 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { useContactModal } from "@/lib/contact-modal-context";
+import { withBase } from "@/lib/base-path";
 import {
   StatusBadge,
   DifficultyPill,
   ModeTag,
-  statusDot,
+  StatusIcon,
   type Tier,
   type Difficulty,
   type Mode,
@@ -91,7 +92,7 @@ const PAIRS: Pair[] = [
       guideLabel: "Browse the migration library",
     },
   },
-  { source: "Power BI", target: "Tableau", tier: "year" },
+  { source: "Power BI", target: "Tableau", tier: "beta" },
   { source: "Qlik", target: "Tableau", tier: "year" },
   { source: "Qlik", target: "Power BI", tier: "year" },
   { source: "Qlik", target: "Databricks AI/BI", tier: "year" },
@@ -132,8 +133,8 @@ export function ConversionShowcase() {
           Conversion expertise
         </p>
         <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-3">
-          How every construct maps —{" "}
-          <span className="text-neutral-400">platform by platform.</span>
+          How every feature maps —{" "}
+          <span className="text-neutral-600">platform by platform.</span>
         </h2>
         <p className="text-[0.95rem] text-neutral-500 leading-[1.6] mb-10 max-w-[560px]">
           Pick a conversion path and see exactly what Antares automates, what
@@ -152,7 +153,7 @@ export function ConversionShowcase() {
                   onClick={() => selectSource(s)}
                   aria-pressed={on}
                   className={`text-[0.82rem] font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer ${
-                    on ? "bg-white text-neutral-900 shadow-sm" : "text-neutral-500 hover:text-neutral-800"
+                    on ? "bg-white text-neutral-900 shadow-sm" : "text-neutral-600 hover:text-neutral-900"
                   }`}
                 >
                   {s}
@@ -163,7 +164,7 @@ export function ConversionShowcase() {
 
           {/* Target pills */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[0.72rem] text-neutral-400 font-medium mr-1">to</span>
+            <span className="text-[0.72rem] text-neutral-600 font-medium mr-1">to</span>
             {targets.map((p) => {
               const on = p.target === target;
               return (
@@ -177,7 +178,7 @@ export function ConversionShowcase() {
                       : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400"
                   }`}
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${statusDot(p.tier)}`} />
+                  <StatusIcon tier={p.tier} />
                   {p.target}
                 </button>
               );
@@ -242,7 +243,7 @@ function LivePanel({ pair }: { pair: Pair }) {
       {/* Flagship code card */}
       {pair.code && (
         <div className="border-t lg:border-t-0 lg:border-l border-neutral-100 bg-neutral-50/60 p-6 flex flex-col">
-          <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-neutral-400 mb-4">
+          <p className="text-[0.6rem] font-bold tracking-[0.12em] uppercase text-neutral-600 mb-4">
             The hard part, handled
           </p>
           <CodeBlock label={pair.code.fromLabel} code={pair.code.fromCode} />
@@ -250,7 +251,7 @@ function LivePanel({ pair }: { pair: Pair }) {
           <CodeBlock label={pair.code.toLabel} code={pair.code.toCode} accent />
           {pair.code.guideHref && (
             <a
-              href={pair.code.guideHref}
+              href={withBase(pair.code.guideHref)}
               className="mt-5 inline-flex items-center gap-1.5 text-[0.78rem] font-bold text-brand hover:text-brand-hover transition-colors"
             >
               {pair.code.guideLabel} →
@@ -265,7 +266,7 @@ function LivePanel({ pair }: { pair: Pair }) {
 function CodeBlock({ label, code, accent }: { label: string; code: string; accent?: boolean }) {
   return (
     <div className={`rounded-lg border overflow-hidden ${accent ? "border-brand/30" : "border-neutral-200"}`}>
-      <div className={`px-3 py-1.5 text-[0.58rem] font-bold tracking-[0.1em] uppercase ${accent ? "bg-brand/10 text-brand" : "bg-neutral-100 text-neutral-400"}`}>
+      <div className={`px-3 py-1.5 text-[0.58rem] font-bold tracking-[0.1em] uppercase ${accent ? "bg-brand/10 text-brand-hover" : "bg-neutral-100 text-neutral-600"}`}>
         {label}
       </div>
       <pre className="px-3 py-2.5 text-[0.72rem] leading-[1.5] text-neutral-700 font-mono whitespace-pre-wrap break-words bg-white">
@@ -281,12 +282,14 @@ function RoadmapPanel({ pair, onNotify }: { pair: Pair; onNotify: () => void }) 
   return (
     <div className="px-6 py-8">
       <p className="text-[0.9rem] text-neutral-600 leading-[1.6] max-w-[520px] mb-6">
-        {pair.source} → {pair.target} isn&apos;t live yet — but the same
-        depth is on the way. Here&apos;s what the converter will cover:
+        {pair.source} → {pair.target}{" "}
+        {pair.tier === "beta"
+          ? "is in private beta — here's the depth it already covers:"
+          : "isn't live yet — but the same depth is on the way. Here's what the converter will cover:"}
       </p>
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 max-w-[600px] mb-8">
         {ROADMAP_PREVIEW.map((item) => (
-          <li key={item} className="flex items-baseline gap-2 text-[0.84rem] text-neutral-400 leading-[1.5]">
+          <li key={item} className="flex items-baseline gap-2 text-[0.84rem] text-neutral-600 leading-[1.5]">
             <span aria-hidden="true" className="text-neutral-300 shrink-0">→</span>
             {item}
           </li>
@@ -296,7 +299,12 @@ function RoadmapPanel({ pair, onNotify }: { pair: Pair; onNotify: () => void }) 
         onClick={onNotify}
         className="inline-flex items-center gap-1.5 text-[0.82rem] font-bold tracking-[0.04em] uppercase text-neutral-900 border-b border-neutral-900 pb-px hover:text-brand hover:border-brand transition-colors cursor-pointer"
       >
-        {pair.tier === "soon" ? "Notify me" : "Talk to us about this path"} →
+        {pair.tier === "soon"
+          ? "Notify me"
+          : pair.tier === "beta"
+          ? "Request beta access"
+          : "Talk to us about this path"}{" "}
+        →
       </button>
     </div>
   );

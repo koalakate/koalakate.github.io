@@ -1,10 +1,11 @@
 import { CtaButton } from "@/components/ui/cta-button";
+import { withBase } from "@/lib/base-path";
 
 export function Analyzer() {
   const screenshot = (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/analyzer-screenshot.png"
+      src={withBase("/analyzer-screenshot.png")}
       alt="Antares Analyzer — readiness scores, migration difficulty, usage trends"
       className="w-full rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
       draggable={false}
@@ -32,7 +33,7 @@ export function Analyzer() {
             {/* Mobile screenshot — between description and list */}
             <div className="lg:hidden mt-8 mb-8">
               {screenshot}
-              <p className="text-[0.7rem] text-neutral-400 mt-2.5">
+              <p className="text-[0.7rem] text-neutral-600 mt-2.5">
                 Example data. Not a claim.
               </p>
             </div>
@@ -46,7 +47,7 @@ export function Analyzer() {
                 "Effort estimates you can plan around",
               ].map((item) => (
                 <li key={item} className="flex items-baseline gap-3 text-neutral-700 leading-[1.5]">
-                  <span aria-hidden="true" className="text-neutral-400 text-[0.9em] shrink-0">⟶</span>
+                  <span aria-hidden="true" className="text-neutral-600 text-[0.9em] shrink-0">⟶</span>
                   {item}
                 </li>
               ))}
@@ -64,7 +65,7 @@ export function Analyzer() {
           {/* ── Right: screenshot — desktop only ───────────────── */}
           <div className="hidden lg:block lg:pt-16">
             {screenshot}
-            <p className="text-[0.7rem] text-neutral-400 mt-2.5">
+            <p className="text-[0.7rem] text-neutral-600 mt-2.5">
               Example data. Not a claim.
             </p>
           </div>

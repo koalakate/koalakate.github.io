@@ -32,7 +32,7 @@ export function Guides() {
               className={`group flex items-center justify-between py-5 border-b border-neutral-200 text-neutral-900 font-medium text-[1.05rem] no-underline transition-colors hover:text-brand ${i === 0 ? "border-t" : ""}`}
             >
               <span>{guide.title}</span>
-              <span className="text-neutral-400 text-xl transition-all group-hover:text-brand group-hover:translate-x-1">→</span>
+              <span className="text-neutral-600 text-xl transition-all group-hover:text-brand group-hover:translate-x-1">→</span>
             </Link>
           ))}
         </div>

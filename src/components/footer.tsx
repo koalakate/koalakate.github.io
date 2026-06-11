@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AntaresLogo } from "@/components/ui/logo";
+import { withBase } from "@/lib/base-path";
 
 export function Footer() {
   return (
@@ -21,10 +22,18 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/migration-library"
+                  href={withBase("/migration-library")}
                   className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
                 >
                   Migration Library
+                </a>
+              </li>
+              <li>
+                <a
+                  href={withBase("/partners")}
+                  className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
+                >
+                  Partners
                 </a>
               </li>
               <li>
@@ -37,7 +46,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/terms/"
+                  href={withBase("/terms/")}
                   className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
                 >
                   Terms
@@ -45,7 +54,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="/privacy/"
+                  href={withBase("/privacy/")}
                   className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
                 >
                   Privacy
@@ -53,7 +62,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          <span className="text-xs text-neutral-400">
+          <span className="text-xs text-neutral-600">
             Antares &copy; 2026
           </span>
         </div>

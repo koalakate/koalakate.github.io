@@ -24,10 +24,27 @@ jobs:
           node-version: '20'
           cache: npm
       - run: npm ci
+      # Build under the /antares-preview GitHub Pages subpath.
       - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /antares-preview
+      # Next's static export keeps files at out/ root; nest them under
+      # antares-preview/ so the artifact serves at /antares-preview/, and add a
+      # root redirect so the bare domain forwards there instead of 404ing.
+      - name: Assemble site
+        run: |
+          mkdir -p site/antares-preview
+          cp -r out/. site/antares-preview/
+          cat > site/index.html <<'EOF'
+          <!doctype html>
+          <meta charset="utf-8">
+          <meta http-equiv="refresh" content="0; url=./antares-preview/">
+          <title>Antares</title>
+          <a href="./antares-preview/">Continue to the Antares preview →</a>
+          EOF
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./site
 
   deploy:
     needs: build

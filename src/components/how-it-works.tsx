@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+
 const STEPS = [
   {
     num: "01",
@@ -22,6 +26,8 @@ const STEPS = [
 ] as const;
 
 export function HowItWorks() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section id="how-it-works" className="py-14 lg:py-[120px]">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -34,9 +40,20 @@ export function HowItWorks() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           {STEPS.map((step, i) => (
-            <div key={step.num} className="flex flex-col">
+            <motion.div
+              key={step.num}
+              className="flex flex-col"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.45,
+                delay: prefersReducedMotion ? 0 : i * 0.1,
+                ease: [0.23, 1, 0.32, 1],
+              }}
+            >
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-[0.6rem] font-bold tracking-[0.14em] uppercase text-neutral-400">
+                <span className="text-[0.6rem] font-bold tracking-[0.14em] uppercase text-neutral-600">
                   {step.num}
                 </span>
                 {i < STEPS.length - 1 && (
@@ -45,7 +62,7 @@ export function HowItWorks() {
               </div>
               <h3 className="text-lg font-bold text-neutral-900 mb-2">{step.title}</h3>
               <p className="text-sm text-neutral-500 leading-[1.6]">{step.description}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

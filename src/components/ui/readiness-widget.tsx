@@ -122,7 +122,7 @@ function BreakdownTable({ data }: { data: TabData }) {
   return (
     <table className="w-full mt-4 border-collapse">
       <thead>
-        <tr className="text-[0.6rem] uppercase tracking-[0.05em] text-neutral-400">
+        <tr className="text-[0.6rem] uppercase tracking-[0.05em] text-neutral-600">
           <th className="text-left font-semibold pb-2">{data.dimension}</th>
           <th className="text-right font-semibold pb-2">{data.valueHeaders[0]}</th>
           <th className="text-right font-semibold pb-2">{data.valueHeaders[1]}</th>
@@ -136,7 +136,7 @@ function BreakdownTable({ data }: { data: TabData }) {
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: r.color }} />
                 <span className="text-[0.72rem] font-medium text-neutral-700">{r.label}</span>
-                <span className="text-[0.6rem] text-neutral-400">{r.pct}%</span>
+                <span className="text-[0.6rem] text-neutral-600">{r.pct}%</span>
               </span>
             </td>
             <td className="py-2 text-right text-[0.72rem] text-neutral-500 tabular-nums">{r.values[0]}</td>
@@ -189,7 +189,7 @@ export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig 
           <div className="w-3 h-3 rounded-full bg-[#FEBC2E]" />
           <div className="w-3 h-3 rounded-full bg-[#28C840]" />
         </div>
-        <div className="flex-1 bg-white border border-neutral-200 rounded px-3 py-1 text-[0.65rem] text-neutral-400 font-mono text-center">
+        <div className="flex-1 bg-white border border-neutral-200 rounded px-3 py-1 text-[0.65rem] text-neutral-600 font-mono text-center">
           app.getantares.io / report
         </div>
         <div className="w-[54px]" />
@@ -202,17 +202,17 @@ export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig 
         <div className="flex items-center gap-5 px-6 py-5 border-b border-neutral-100">
           <ScoreRing value={68} />
           <div className="min-w-0">
-            <p className="text-[0.62rem] uppercase tracking-[0.06em] text-neutral-400 font-semibold">Migration Readiness</p>
+            <p className="text-[0.62rem] uppercase tracking-[0.06em] text-neutral-600 font-semibold">Migration Readiness</p>
             <p className="text-[0.72rem] text-neutral-500 mt-0.5">Tableau Server · 247 workbooks scanned</p>
           </div>
           <div className="ml-auto flex gap-6 flex-shrink-0">
             <div className="text-right">
               <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">81%</p>
-              <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-400 font-semibold mt-1">Auto-convert</p>
+              <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-600 font-semibold mt-1">Auto-convert</p>
             </div>
             <div className="text-right">
               <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">~140h</p>
-              <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-400 font-semibold mt-1">Est. effort</p>
+              <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-600 font-semibold mt-1">Est. effort</p>
             </div>
           </div>
         </div>
@@ -226,7 +226,7 @@ export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig 
                 key={t.key}
                 onClick={() => setActive(t.key)}
                 className={`relative pb-2.5 text-[0.74rem] font-semibold transition-colors ${
-                  on ? "text-neutral-900" : "text-neutral-400 hover:text-neutral-600"
+                  on ? "text-neutral-900" : "text-neutral-600 hover:text-neutral-600"
                 }`}
               >
                 {t.label}

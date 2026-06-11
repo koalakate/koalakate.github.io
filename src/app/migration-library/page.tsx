@@ -45,7 +45,7 @@ export default function MigrationLibraryPage() {
                   {article.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[0.65rem] font-semibold uppercase tracking-[0.08em] bg-neutral-100 text-neutral-500 px-2.5 py-1 rounded-full"
+                      className="text-[0.65rem] font-semibold uppercase tracking-[0.08em] bg-neutral-100 text-neutral-600 px-2.5 py-1 rounded-full"
                     >
                       {tag}
                     </span>
@@ -57,11 +57,12 @@ export default function MigrationLibraryPage() {
                 <p className="text-sm text-neutral-500 leading-[1.6] mb-4">
                   {article.excerpt}
                 </p>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-600">
                   {new Date(article.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
+                    timeZone: "UTC",
                   })}
                 </p>
               </Link>

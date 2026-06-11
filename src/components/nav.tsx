@@ -4,16 +4,22 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AntaresLogo } from "@/components/ui/logo";
 import { useContactModal } from "@/lib/contact-modal-context";
+import { VENDOR_NAV } from "@/lib/vendors";
 
-const NAV_LINKS = [
+const LEFT_LINKS = [
   { href: "/analyzer", label: "Analyzer" },
   { href: "/converter", label: "Converter" },
+];
+const RIGHT_LINKS = [
   { href: "/migration-library", label: "Migration Library" },
   { href: "/#pricing", label: "Pricing" },
 ];
+// Mobile menu also surfaces Partners (kept out of the desktop bar to avoid crowding).
+const MOBILE_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS, { href: "/partners", label: "Partners" }];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [platformsOpen, setPlatformsOpen] = useState(false);
   const { openModal } = useContactModal();
 
   useEffect(() => {
@@ -27,6 +33,8 @@ export function Nav() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  const linkClass = "text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors";
+
   return (
     <>
       <nav className="fixed top-4 left-4 right-4 z-50 bg-[rgba(250,250,250,0.85)] backdrop-blur-[20px] border border-neutral-200 rounded-xl px-6 py-3">
@@ -36,15 +44,52 @@ export function Nav() {
           </Link>
 
           {/* Desktop menu */}
-          <ul className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
+          <ul className="hidden md:flex items-center gap-6 lg:gap-7">
+            {LEFT_LINKS.map((link) => (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
-                >
-                  {link.label}
-                </Link>
+                <Link href={link.href} className={linkClass}>{link.label}</Link>
+              </li>
+            ))}
+
+            {/* Platforms dropdown */}
+            <li
+              className="relative"
+              onMouseEnter={() => setPlatformsOpen(true)}
+              onMouseLeave={() => setPlatformsOpen(false)}
+            >
+              <button
+                className={`inline-flex items-center gap-1 cursor-pointer ${linkClass}`}
+                aria-expanded={platformsOpen}
+                aria-haspopup="true"
+                onClick={() => setPlatformsOpen((v) => !v)}
+              >
+                Platforms
+                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" className={`transition-transform ${platformsOpen ? "rotate-180" : ""}`}>
+                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              {platformsOpen && (
+                <div className="absolute left-0 top-full pt-3">
+                  <div className="w-64 bg-white border border-neutral-200 rounded-xl shadow-[0_12px_48px_rgba(0,0,0,0.12)] p-2">
+                    {VENDOR_NAV.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-3 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
+                        onClick={() => setPlatformsOpen(false)}
+                      >
+                        <span className="block text-sm font-semibold text-neutral-900">{item.label}</span>
+                        <span className="block text-xs text-neutral-500">{item.product}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </li>
+
+            {RIGHT_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className={linkClass}>{link.label}</Link>
               </li>
             ))}
           </ul>
@@ -94,15 +139,29 @@ export function Nav() {
           </button>
         </div>
 
-        <nav className="flex flex-col px-6 pt-6 flex-1">
-          {NAV_LINKS.map((link) => (
+        <nav className="flex flex-col px-6 pt-4 flex-1 overflow-y-auto">
+          {MOBILE_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="text-[3rem] font-bold text-neutral-900 leading-none tracking-[-0.03em] border-b border-neutral-100 py-5"
+              className="text-[2.4rem] font-bold text-neutral-900 leading-none tracking-[-0.03em] border-b border-neutral-100 py-4"
             >
               {link.label}
+            </Link>
+          ))}
+
+          {/* Platforms group */}
+          <p className="text-xs font-bold tracking-[0.12em] uppercase text-neutral-400 pt-6 pb-3">Platforms</p>
+          {VENDOR_NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className="flex items-baseline justify-between border-b border-neutral-100 py-3.5"
+            >
+              <span className="text-[1.5rem] font-bold text-neutral-900 tracking-[-0.02em]">{item.label}</span>
+              <span className="text-sm text-neutral-500">{item.product}</span>
             </Link>
           ))}
         </nav>

@@ -16,7 +16,7 @@ const MIGRATION_OPTIONS = [
 ];
 
 const inputClass =
-  "w-full border border-neutral-200 rounded-lg px-3.5 py-2.5 text-neutral-900 text-sm placeholder:text-neutral-400 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15 transition-colors bg-white";
+  "w-full border border-neutral-200 rounded-lg px-3.5 py-2.5 text-neutral-900 text-sm placeholder:text-neutral-600 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/15 transition-colors bg-white";
 const labelClass =
   "block text-xs font-medium tracking-[0.04em] uppercase text-neutral-500 mb-1.5";
 
@@ -98,7 +98,7 @@ export function ContactModal() {
             <button
               onClick={closeModal}
               aria-label="Close"
-              className="absolute top-3.5 right-3.5 w-9 h-9 flex items-center justify-center text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
+              className="absolute top-3.5 right-3.5 w-9 h-9 flex items-center justify-center text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
             >
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
                 <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -145,7 +145,7 @@ export function ContactModal() {
                       required
                       value={migration}
                       onChange={(e) => setMigration(e.target.value)}
-                      className={`${inputClass} appearance-none pr-10 ${migration === "" ? "text-neutral-400" : ""}`}
+                      className={`${inputClass} appearance-none pr-10 ${migration === "" ? "text-neutral-600" : ""}`}
                     >
                       <option value="" disabled>Select a migration path</option>
                       {MIGRATION_OPTIONS.map((o) => (
@@ -153,7 +153,7 @@ export function ContactModal() {
                       ))}
                       <option value="Other" className="text-neutral-900">My migration isn&apos;t listed</option>
                     </select>
-                    <span aria-hidden="true" className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400">
+                    <span aria-hidden="true" className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-600">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                         <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -172,7 +172,7 @@ export function ContactModal() {
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="modal-message">
-                    Message <span className="normal-case font-normal text-neutral-400">(optional)</span>
+                    Message <span className="normal-case font-normal text-neutral-600">(optional)</span>
                   </label>
                   <textarea id="modal-message" name="message" rows={3} placeholder="Tell us about your project, timeline, or questions..." className={`${inputClass} resize-none`} />
                 </div>

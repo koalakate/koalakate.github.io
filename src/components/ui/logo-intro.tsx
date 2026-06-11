@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { withBase } from "@/lib/base-path";
 
 // Dense → sparse
 // "@#S%?*+=~-:,. "
@@ -167,7 +168,7 @@ export function LogoIntro({ onComplete }: { onComplete: () => void }) {
 
     const img = new Image();
     img.onload = () => init(img);
-    img.src = "/logo.svg";
+    img.src = withBase("/logo.svg");
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);

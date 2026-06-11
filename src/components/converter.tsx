@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { CtaButton } from "@/components/ui/cta-button";
+import { withBase } from "@/lib/base-path";
 
 const STEPS = [
   {
@@ -28,9 +29,9 @@ const STEPS = [
   {
     num: "03",
     label: "Fine-Tuning",
-    title: "Manual corrections — minimized",
+    title: "Agent driven refinement",
     description:
-      "Only edge cases need a human touch. The converter handled the rest.",
+      "An AI agent refines the edge cases automatically — only the rare exception needs a human touch.",
     img: "/screenshots/Manual Fine-tuned Result.svg",
     imgAlt: "Fine-tuned final dashboard",
     chromeLabel: "report_final.pbix · Power BI",
@@ -57,17 +58,12 @@ export function Converter() {
         </p>
         <h2 className="text-[clamp(2rem,4vw,3rem)] font-bold text-neutral-950 leading-[1.1] tracking-[-0.03em] mb-3">
           Automated BI conversion.{" "}
-          <span className="text-neutral-400">In three steps.</span>
+          <span className="text-neutral-600">In three steps.</span>
         </h2>
         <p className="text-[0.95rem] text-neutral-500 leading-[1.6] mb-8">
-          Antares automates 70–90% of the conversion work. Weeks of manual
-          rebuilding done in hours.
+          Antares automates the bulk of the conversion work — weeks of manual
+          rebuilding, done in days.
         </p>
-
-        <div className="mb-10 inline-flex items-center gap-1.5 text-[0.72rem] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full">
-          <span aria-hidden="true">✓</span>
-          Every output validated against source data
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-12 xl:gap-16 items-start">
 
@@ -83,19 +79,18 @@ export function Converter() {
                     onClick={() => select(i)}
                     className="text-left group w-full"
                   >
-                    <div
-                      className={`flex gap-4 py-5 transition-opacity duration-300 ${
-                        isActive ? "opacity-100" : "opacity-40 hover:opacity-65"
-                      }`}
-                    >
+                    {/* Active state is conveyed by the brand-filled circle, the
+                        larger/darker title, and the brand underline bar — not by
+                        dimming inactive steps below readable contrast (WCAG AA). */}
+                    <div className="flex gap-4 py-5">
                       {/* Circle */}
                       <div
                         className={`flex-shrink-0 mt-0.5 w-7 h-7 rounded-full flex items-center justify-center text-[0.65rem] font-bold transition-colors duration-200 ${
                           isActive
                             ? "bg-brand text-white"
                             : isDone
-                            ? "bg-neutral-200 text-neutral-500"
-                            : "bg-neutral-100 text-neutral-400"
+                            ? "bg-neutral-200 text-neutral-700"
+                            : "bg-neutral-100 text-neutral-600"
                         }`}
                       >
                         {isDone ? "✓" : s.num}
@@ -146,7 +141,7 @@ export function Converter() {
                     <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
                   </div>
                   <div className="flex-1 bg-white rounded h-4 px-2 flex items-center border border-neutral-200">
-                    <span className="text-[0.55rem] text-neutral-400 font-medium">{step.chromeLabel}</span>
+                    <span className="text-[0.55rem] text-neutral-600 font-medium">{step.chromeLabel}</span>
                   </div>
                 </div>
                 {/* Fixed-ratio frame — fills (cover); height constant across steps so nothing jumps */}
@@ -154,7 +149,7 @@ export function Converter() {
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={active}
-                      src={step.img}
+                      src={withBase(step.img)}
                       alt={step.imgAlt}
                       draggable={false}
                       className="absolute inset-0 w-full h-full object-cover object-top"
@@ -180,7 +175,7 @@ export function Converter() {
                   <div className="w-3 h-3 rounded-full bg-[#28C840]" />
                 </div>
                 <div className="flex-1 bg-white rounded-md h-5 px-3 flex items-center border border-neutral-200">
-                  <span className="text-[0.6rem] text-neutral-400 font-medium">
+                  <span className="text-[0.6rem] text-neutral-600 font-medium">
                     {step.chromeLabel}
                   </span>
                 </div>
@@ -190,7 +185,7 @@ export function Converter() {
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={active}
-                    src={step.img}
+                    src={withBase(step.img)}
                     alt={step.imgAlt}
                     draggable={false}
                     className="absolute inset-0 w-full h-full object-cover object-top"
