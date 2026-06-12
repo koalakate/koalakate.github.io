@@ -21,12 +21,9 @@ export function VendorLanding({ vendor: v }: { vendor: Vendor }) {
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section className="relative isolate overflow-hidden pt-[120px] md:pt-[180px] pb-[60px] md:pb-[100px]">
           <div className="max-w-[1200px] mx-auto px-6">
-            <div
-              className="inline-flex items-center justify-center w-14 h-14 rounded-2xl font-bold text-2xl mb-6 select-none"
-              style={{ backgroundColor: v.accent, color: v.accentText }}
-              aria-hidden="true"
-            >
-              {v.monogram}
+            <div className="inline-flex items-center justify-center h-14 min-w-14 px-4 rounded-2xl bg-white border border-neutral-200 shadow-[0_4px_24px_rgba(0,0,0,0.06)] mb-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={withBase(v.logo)} alt={v.logoAlt} className="h-7 w-auto" draggable={false} />
             </div>
             <p className="text-xs font-medium tracking-[0.08em] uppercase text-neutral-500 mb-4">{v.eyebrow}</p>
             <h1 className="text-[clamp(2.4rem,5vw,4rem)] font-bold text-neutral-900 leading-[1.05] tracking-[-0.04em] max-w-[820px]">

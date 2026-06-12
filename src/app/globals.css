@@ -163,3 +163,13 @@
     outline-offset: 2px;
   }
 }
+
+/* The ASCII logo intro is desktop-only — it reads as visual noise on phones.
+   Hide it before hydration (CSS, no flash); the wrapper also skips mounting it
+   on mobile so the canvas animation never runs. !important beats the overlay's
+   inline display. */
+@media (max-width: 767px) {
+  .logo-intro-overlay {
+    display: none !important;
+  }
+}

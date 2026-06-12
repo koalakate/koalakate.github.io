@@ -3,23 +3,29 @@
 import { useState } from "react";
 
 /* ----------------------------------------------------------------------------
- * Data — all internally consistent: 247 workbooks total. The Matrix tab's
- * column sums equal the Complexity tab's per-tier totals.
+ * Data — authored at the "All projects" scope (247 workbooks). Numbers are
+ * stored numerically so a per-filter scale stays internally consistent: the
+ * filter pills rescope the whole report (header KPIs + every table) the way
+ * a real Tableau scan would. See FILTERS below.
  * -------------------------------------------------------------------------- */
 
 interface Row {
   label: string;
   color: string;
-  pct: number;            // share of the stacked bar
-  values: string[];       // two metric columns
-  total: string;          // bold trailing column
+  pct: number;            // share of the stacked bar (distribution is scope-invariant)
+  values: [number, number]; // two metric columns, at base scope
+  total: number;          // bold trailing column, at base scope
 }
+
+type TotalMode = "sum" | "independent"; // is `total` the sum of the two columns, or its own metric?
 
 interface TabData {
   title: string;
   dimension: string;      // header for the first table column
   valueHeaders: [string, string];
   totalHeader: string;
+  totalMode: TotalMode;
+  totalFmt: "plain" | "k"; // how the trailing column is formatted
   rows: Row[];
 }
 
@@ -28,12 +34,14 @@ const COMPLEXITY: TabData = {
   dimension: "Complexity",
   valueHeaders: ["Auto-convert", "Manual"],
   totalHeader: "Workbooks",
+  totalMode: "sum",
+  totalFmt: "plain",
   rows: [
-    { label: "Low",       color: "#22c55e", pct: 42, values: ["100", "4"],  total: "104" },
-    { label: "Medium",    color: "#f59e0b", pct: 28, values: ["58", "11"],  total: "69" },
-    { label: "High",      color: "#f97316", pct: 18, values: ["30", "14"],  total: "44" },
-    { label: "Very High", color: "#ef4444", pct: 8,  values: ["9", "11"],   total: "20" },
-    { label: "Extreme",   color: "#9333ea", pct: 4,  values: ["3", "7"],    total: "10" },
+    { label: "Low",       color: "#22c55e", pct: 42, values: [100, 4],  total: 104 },
+    { label: "Medium",    color: "#f59e0b", pct: 28, values: [58, 11],  total: 69 },
+    { label: "High",      color: "#f97316", pct: 18, values: [30, 14],  total: 44 },
+    { label: "Very High", color: "#ef4444", pct: 8,  values: [9, 11],   total: 20 },
+    { label: "Extreme",   color: "#9333ea", pct: 4,  values: [3, 7],    total: 10 },
   ],
 };
 
@@ -42,12 +50,14 @@ const FEATURES: TabData = {
   dimension: "Feature",
   valueHeaders: ["Auto-convert", "Manual review"],
   totalHeader: "Uses",
+  totalMode: "sum",
+  totalFmt: "plain",
   rows: [
-    { label: "LOD expressions",  color: "#3B82F6", pct: 51, values: ["420", "63"], total: "483" },
-    { label: "Table calcs",      color: "#6366f1", pct: 21, values: ["180", "22"], total: "202" },
-    { label: "Dashboard actions",color: "#06b6d4", pct: 17, values: ["140", "25"], total: "165" },
-    { label: "Custom SQL",       color: "#f97316", pct: 6,  values: ["12", "44"],  total: "56" },
-    { label: "Data blends",      color: "#8b5cf6", pct: 5,  values: ["30", "18"],  total: "48" },
+    { label: "LOD expressions",   color: "#3B82F6", pct: 51, values: [420, 63], total: 483 },
+    { label: "Table calcs",       color: "#6366f1", pct: 21, values: [180, 22], total: 202 },
+    { label: "Dashboard actions", color: "#06b6d4", pct: 17, values: [140, 25], total: 165 },
+    { label: "Custom SQL",        color: "#f97316", pct: 6,  values: [12, 44],  total: 56 },
+    { label: "Data blends",       color: "#8b5cf6", pct: 5,  values: [30, 18],  total: 48 },
   ],
 };
 
@@ -56,12 +66,14 @@ const USAGE: TabData = {
   dimension: "Department",
   valueHeaders: ["Active users", "Workbooks"],
   totalHeader: "Views · 30d",
+  totalMode: "independent",
+  totalFmt: "k",
   rows: [
-    { label: "Sales",      color: "#3B82F6", pct: 38, values: ["120", "64"], total: "18.4k" },
-    { label: "Finance",    color: "#0ea5e9", pct: 25, values: ["64", "48"],  total: "12.1k" },
-    { label: "Operations", color: "#14b8a6", pct: 20, values: ["88", "71"],  total: "9.7k" },
-    { label: "Marketing",  color: "#f59e0b", pct: 13, values: ["42", "38"],  total: "6.3k" },
-    { label: "Other",      color: "#94a3b8", pct: 4,  values: ["19", "26"],  total: "2.2k" },
+    { label: "Sales",      color: "#3B82F6", pct: 38, values: [120, 64], total: 18400 },
+    { label: "Finance",    color: "#0ea5e9", pct: 25, values: [64, 48],  total: 12100 },
+    { label: "Operations", color: "#14b8a6", pct: 20, values: [88, 71],  total: 9700 },
+    { label: "Marketing",  color: "#f59e0b", pct: 13, values: [42, 38],  total: 6300 },
+    { label: "Other",      color: "#94a3b8", pct: 4,  values: [19, 26],  total: 2200 },
   ],
 };
 
@@ -72,7 +84,53 @@ const TABS: { key: TabKey; label: string }[] = [
   { key: "usage",      label: "Usage" },
 ];
 
-const FILTERS = ["All projects", "All sites", "Active only"];
+/* Filter pills rescope the report. `factor` scales every row; the header KPIs
+ * are authored per scope so the story stays coherent (the whole server is
+ * larger and messier; the active subset is smaller and cleaner). */
+interface Filter {
+  key: string;
+  label: string;
+  factor: number;
+  scanned: number; // ≈ round(247 * factor)
+  ready: number;   // readiness ring
+  autoPct: number;
+  effort: string;
+}
+
+const FILTERS: Filter[] = [
+  { key: "projects", label: "All projects", factor: 1,    scanned: 247, ready: 68, autoPct: 81, effort: "~140h" },
+  { key: "sites",    label: "All sites",    factor: 2.6,  scanned: 642, ready: 61, autoPct: 74, effort: "~360h" },
+  { key: "active",   label: "Active only",  factor: 0.55, scanned: 136, ready: 74, autoPct: 88, effort: "~70h" },
+];
+
+/* ----------------------------------------------------------------------------
+ * Formatting + scaling
+ * -------------------------------------------------------------------------- */
+
+function fmtK(n: number) {
+  if (n >= 1000) {
+    const v = n / 1000;
+    return `${v.toFixed(1).replace(/\.0$/, "")}k`;
+  }
+  return String(n);
+}
+
+const fmtNum = (n: number) => n.toLocaleString("en-US");
+
+/** Apply a filter's scale to a tab's rows. Distribution (pct) is scope-invariant
+ *  under a uniform scale, so the stacked bar is preserved and only counts move. */
+function scaleTab(data: TabData, factor: number): TabData {
+  if (factor === 1) return data;
+  return {
+    ...data,
+    rows: data.rows.map((r) => {
+      const v0 = Math.round(r.values[0] * factor);
+      const v1 = Math.round(r.values[1] * factor);
+      const total = data.totalMode === "sum" ? v0 + v1 : Math.round(r.total * factor);
+      return { ...r, values: [v0, v1] as [number, number], total };
+    }),
+  };
+}
 
 /* ----------------------------------------------------------------------------
  * Small pieces
@@ -86,10 +144,11 @@ function ScoreRing({ value, size = 64 }: { value: number; size?: number }) {
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90" aria-hidden="true">
         <circle cx="60" cy="60" r="46" fill="none" stroke="#e5e7eb" strokeWidth="9" />
         <circle cx="60" cy="60" r="46" fill="none" stroke="#22c55e" strokeWidth="9"
-          strokeDasharray={`${(value / 100) * CIRC} ${CIRC}`} strokeLinecap="round" />
+          strokeDasharray={`${(value / 100) * CIRC} ${CIRC}`} strokeLinecap="round"
+          className="transition-[stroke-dasharray] duration-500 ease-out" />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-bold text-neutral-900 leading-none" style={{ fontSize: size * 0.34 }}>
+        <span className="font-bold text-neutral-900 leading-none tabular-nums" style={{ fontSize: size * 0.34 }}>
           {value}
         </span>
       </div>
@@ -119,6 +178,7 @@ function StackedBar({ rows }: { rows: Row[] }) {
 }
 
 function BreakdownTable({ data }: { data: TabData }) {
+  const fmtTotal = (n: number) => (data.totalFmt === "k" ? fmtK(n) : fmtNum(n));
   return (
     <table className="w-full mt-4 border-collapse">
       <thead>
@@ -139,9 +199,9 @@ function BreakdownTable({ data }: { data: TabData }) {
                 <span className="text-[0.6rem] text-neutral-600">{r.pct}%</span>
               </span>
             </td>
-            <td className="py-2 text-right text-[0.72rem] text-neutral-500 tabular-nums">{r.values[0]}</td>
-            <td className="py-2 text-right text-[0.72rem] text-neutral-500 tabular-nums">{r.values[1]}</td>
-            <td className="py-2 text-right text-[0.72rem] font-bold text-neutral-900 tabular-nums">{r.total}</td>
+            <td className="py-2 text-right text-[0.72rem] text-neutral-500 tabular-nums">{fmtNum(r.values[0])}</td>
+            <td className="py-2 text-right text-[0.72rem] text-neutral-500 tabular-nums">{fmtNum(r.values[1])}</td>
+            <td className="py-2 text-right text-[0.72rem] font-bold text-neutral-900 tabular-nums">{fmtTotal(r.total)}</td>
           </tr>
         ))}
       </tbody>
@@ -179,6 +239,10 @@ const TAB_DATA: Record<TabKey, TabData> = {
 
 export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig }) {
   const [active, setActive] = useState<TabKey>("complexity");
+  const [filterKey, setFilterKey] = useState<string>(FILTERS[0].key);
+
+  const filter = FILTERS.find((f) => f.key === filterKey) ?? FILTERS[0];
+  const data = scaleTab(TAB_DATA[active], filter.factor);
 
   return (
     <div style={{ width: "100%", maxWidth: cfg.widgetWidth }}>
@@ -198,20 +262,20 @@ export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig 
       {/* Panel */}
       <div className="bg-white border border-neutral-200 rounded-b-2xl shadow-[0_12px_48px_rgba(0,0,0,0.09)] overflow-hidden">
 
-        {/* KPI header — high-level aggregate */}
+        {/* KPI header — high-level aggregate, rescoped by the active filter */}
         <div className="flex items-center gap-5 px-6 py-5 border-b border-neutral-100">
-          <ScoreRing value={68} />
+          <ScoreRing value={filter.ready} />
           <div className="min-w-0">
             <p className="text-[0.62rem] uppercase tracking-[0.06em] text-neutral-600 font-semibold">Migration Readiness</p>
-            <p className="text-[0.72rem] text-neutral-500 mt-0.5">Tableau Server · 247 workbooks scanned</p>
+            <p className="text-[0.72rem] text-neutral-500 mt-0.5 tabular-nums">Tableau Server · {filter.scanned} workbooks scanned</p>
           </div>
           <div className="ml-auto flex gap-6 flex-shrink-0">
             <div className="text-right">
-              <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">81%</p>
+              <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">{filter.autoPct}%</p>
               <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-600 font-semibold mt-1">Auto-convert</p>
             </div>
             <div className="text-right">
-              <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">~140h</p>
+              <p className="text-[1.05rem] font-bold text-neutral-900 leading-none tabular-nums">{filter.effort}</p>
               <p className="text-[0.58rem] uppercase tracking-[0.04em] text-neutral-600 font-semibold mt-1">Est. effort</p>
             </div>
           </div>
@@ -236,23 +300,31 @@ export function ReadinessWidget({ cfg = WIDGET_DEFAULTS }: { cfg?: WidgetConfig 
           })}
         </div>
 
-        {/* Filter chips */}
+        {/* Filter chips — clickable, rescope the whole report */}
         <div className="flex gap-1.5 flex-wrap px-6 pt-4">
-          {FILTERS.map((f, i) => (
-            <span
-              key={f}
-              className={`text-[0.62rem] font-medium px-2.5 py-0.5 rounded-full border ${
-                i === 0 ? "bg-neutral-900 text-white border-neutral-900" : "bg-white text-neutral-500 border-neutral-200"
-              }`}
-            >
-              {f}
-            </span>
-          ))}
+          {FILTERS.map((f) => {
+            const on = f.key === filterKey;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                onClick={() => setFilterKey(f.key)}
+                aria-pressed={on}
+                className={`text-[0.62rem] font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer ${
+                  on
+                    ? "bg-neutral-900 text-white border-neutral-900"
+                    : "bg-white text-neutral-500 border-neutral-200 hover:border-neutral-300 hover:text-neutral-700"
+                }`}
+              >
+                {f.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Active tab content */}
         <div className="px-6 py-5">
-          <BreakdownView data={TAB_DATA[active]} />
+          <BreakdownView data={data} />
         </div>
       </div>
     </div>

@@ -37,7 +37,9 @@ export interface Vendor {
   role: "source" | "target";
   accent: string; // brand-ish accent hex
   accentText: string; // readable text on accent
-  monogram: string;
+  monogram: string; // fallback when no logo
+  logo: string; // product brand logo in /public/logos
+  logoAlt: string;
   eyebrow: string;
   h1: string;
   subcopy: string;
@@ -63,6 +65,8 @@ export const VENDORS: Vendor[] = [
     accent: "#F2C811",
     accentText: "#1A1A1A",
     monogram: "M",
+    logo: "/logos/powerbi.svg",
+    logoAlt: "Microsoft Power BI logo",
     eyebrow: "Platform · Microsoft Power BI",
     h1: "Migrate to Microsoft Power BI — automated.",
     subcopy:
@@ -112,6 +116,8 @@ export const VENDORS: Vendor[] = [
     accent: "#00A1E0",
     accentText: "#FFFFFF",
     monogram: "S",
+    logo: "/logos/tableau.svg",
+    logoAlt: "Tableau logo",
     eyebrow: "Platform · Salesforce Tableau",
     h1: "Moving off Salesforce Tableau? See your estate first.",
     subcopy:
@@ -159,6 +165,8 @@ export const VENDORS: Vendor[] = [
     accent: "#FF3621",
     accentText: "#FFFFFF",
     monogram: "D",
+    logo: "/logos/databricks.svg",
+    logoAlt: "Databricks logo",
     eyebrow: "Platform · Databricks AI/BI",
     h1: "Migrate to Databricks AI/BI — on your lakehouse.",
     subcopy:
@@ -209,4 +217,6 @@ export const VENDOR_NAV = VENDORS.map((v) => ({
   href: `/${v.slug}`,
   label: v.name,
   product: v.product,
+  logo: v.logo,
+  logoAlt: v.logoAlt,
 }));

@@ -1,12 +1,27 @@
+"use client";
+
 import { GradientHeading } from "@/components/ui/gradient-heading";
 import { CtaButton } from "@/components/ui/cta-button";
+import { useContactModal } from "@/lib/contact-modal-context";
 import {
   TextureCard,
   TextureCardContent,
   TextureCardTitle,
 } from "@/components/ui/texture-card";
 
-const tiers = [
+type Tier = {
+  label: string;
+  title: string;
+  price: string;
+  description: string;
+  features: string[];
+  // `modal: true` opens the contact form; otherwise the button is a link.
+  cta: { text: string; href: string } | { text: string; modal: true };
+  primary: boolean;
+  featured: boolean;
+};
+
+const tiers: Tier[] = [
   {
     label: "Start here",
     title: "Analyzer",
@@ -37,10 +52,7 @@ const tiers = [
       "Layout & design preservation",
       "Validation against source data",
     ],
-    cta: {
-      text: "Get in Touch",
-      href: "mailto:hello@getantares.io?subject=Converter License",
-    },
+    cta: { text: "Get in Touch", modal: true },
     primary: false,
     featured: true,
   },
@@ -57,16 +69,14 @@ const tiers = [
       "Change management & training",
       "Post-migration optimization",
     ],
-    cta: {
-      text: "Get in Touch",
-      href: "mailto:hello@getantares.io?subject=End-to-End Migration",
-    },
+    cta: { text: "Get in Touch", modal: true },
     primary: false,
     featured: false,
   },
 ];
 
 export function Pricing() {
+  const { openModal } = useContactModal();
   return (
     <section id="pricing" className="py-14 lg:py-[120px]">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -112,13 +122,23 @@ export function Pricing() {
                 </ul>
                 {/* mt-auto aligns all buttons to the same bottom position */}
                 <div className="mt-auto pt-8">
-                  <CtaButton
-                    href={tier.cta.href}
-                    variant={tier.primary ? "primary" : "secondary"}
-                    className="w-full px-6"
-                  >
-                    {tier.cta.text}
-                  </CtaButton>
+                  {"modal" in tier.cta ? (
+                    <CtaButton
+                      onClick={openModal}
+                      variant={tier.primary ? "primary" : "secondary"}
+                      className="w-full px-6"
+                    >
+                      {tier.cta.text}
+                    </CtaButton>
+                  ) : (
+                    <CtaButton
+                      href={tier.cta.href}
+                      variant={tier.primary ? "primary" : "secondary"}
+                      className="w-full px-6"
+                    >
+                      {tier.cta.text}
+                    </CtaButton>
+                  )}
                 </div>
               </TextureCardContent>
             </TextureCard>

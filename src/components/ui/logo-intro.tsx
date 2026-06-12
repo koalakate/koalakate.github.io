@@ -178,6 +178,7 @@ export function LogoIntro({ onComplete }: { onComplete: () => void }) {
   return (
     <div
       ref={overlayRef}
+      className="logo-intro-overlay"
       style={{
         position: "fixed",
         inset: 0,

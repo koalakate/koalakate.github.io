@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AntaresLogo } from "@/components/ui/logo";
 import { useContactModal } from "@/lib/contact-modal-context";
 import { VENDOR_NAV } from "@/lib/vendors";
+import { withBase } from "@/lib/base-path";
 
 const LEFT_LINKS = [
   { href: "/analyzer", label: "Analyzer" },
@@ -12,10 +13,10 @@ const LEFT_LINKS = [
 ];
 const RIGHT_LINKS = [
   { href: "/migration-library", label: "Migration Library" },
+  { href: "/partners", label: "Partners" },
   { href: "/#pricing", label: "Pricing" },
 ];
-// Mobile menu also surfaces Partners (kept out of the desktop bar to avoid crowding).
-const MOBILE_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS, { href: "/partners", label: "Partners" }];
+const MOBILE_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ export function Nav() {
           </Link>
 
           {/* Desktop menu */}
-          <ul className="hidden md:flex items-center gap-6 lg:gap-7">
+          <ul className="hidden md:flex items-center gap-5 lg:gap-6">
             {LEFT_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className={linkClass}>{link.label}</Link>
@@ -75,11 +76,17 @@ export function Nav() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="block px-3 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
                         onClick={() => setPlatformsOpen(false)}
                       >
-                        <span className="block text-sm font-semibold text-neutral-900">{item.label}</span>
-                        <span className="block text-xs text-neutral-500">{item.product}</span>
+                        <span className="flex items-center justify-center w-9 h-9 rounded-md bg-neutral-50 border border-neutral-200 shrink-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={withBase(item.logo)} alt="" className="h-4 w-auto" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-neutral-900">{item.label}</span>
+                          <span className="block text-xs text-neutral-500">{item.product}</span>
+                        </span>
                       </Link>
                     ))}
                   </div>
@@ -158,10 +165,12 @@ export function Nav() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="flex items-baseline justify-between border-b border-neutral-100 py-3.5"
+              className="flex items-center gap-3 border-b border-neutral-100 py-3.5"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={withBase(item.logo)} alt="" className="h-6 w-auto shrink-0" />
               <span className="text-[1.5rem] font-bold text-neutral-900 tracking-[-0.02em]">{item.label}</span>
-              <span className="text-sm text-neutral-500">{item.product}</span>
+              <span className="ml-auto text-sm text-neutral-500">{item.product}</span>
             </Link>
           ))}
         </nav>

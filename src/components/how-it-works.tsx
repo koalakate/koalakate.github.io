@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 const STEPS = [
@@ -27,6 +28,9 @@ const STEPS = [
 
 export function HowItWorks() {
   const prefersReducedMotion = useReducedMotion();
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  const ease = [0.23, 1, 0.32, 1] as const;
 
   return (
     <section id="how-it-works" className="py-14 lg:py-[120px]">
@@ -39,31 +43,59 @@ export function HowItWorks() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-          {STEPS.map((step, i) => (
-            <motion.div
-              key={step.num}
-              className="flex flex-col"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.45,
-                delay: prefersReducedMotion ? 0 : i * 0.1,
-                ease: [0.23, 1, 0.32, 1],
-              }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[0.6rem] font-bold tracking-[0.14em] uppercase text-neutral-600">
-                  {step.num}
-                </span>
-                {i < STEPS.length - 1 && (
-                  <div className="hidden lg:block flex-1 h-px bg-neutral-200" />
-                )}
+          {STEPS.map((step, i) => {
+            // Rule draws first, content fades up just behind it.
+            const ruleDelay = prefersReducedMotion ? 0 : i * 0.08;
+            const contentDelay = prefersReducedMotion ? 0 : i * 0.08 + 0.12;
+            const dimmed = hovered !== null && hovered !== i;
+
+            return (
+              <div
+                key={step.num}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                className={`flex flex-col transition-opacity duration-300 ease-out ${
+                  dimmed ? "opacity-60" : "opacity-100"
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className={`text-[0.6rem] font-bold tracking-[0.14em] uppercase transition-colors duration-300 ease-out ${
+                      hovered === i ? "text-neutral-950" : "text-neutral-600"
+                    }`}
+                  >
+                    {step.num}
+                  </span>
+                  {i < STEPS.length - 1 && (
+                    <motion.div
+                      className="hidden lg:block flex-1 h-px bg-neutral-200 origin-left"
+                      initial={prefersReducedMotion ? false : { scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, margin: "-80px" }}
+                      transition={{
+                        duration: prefersReducedMotion ? 0 : 0.6,
+                        delay: ruleDelay,
+                        ease,
+                      }}
+                    />
+                  )}
+                </div>
+                <motion.div
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{
+                    duration: prefersReducedMotion ? 0 : 0.45,
+                    delay: contentDelay,
+                    ease,
+                  }}
+                >
+                  <h3 className="text-lg font-bold text-neutral-900 mb-2">{step.title}</h3>
+                  <p className="text-sm text-neutral-500 leading-[1.6]">{step.description}</p>
+                </motion.div>
               </div>
-              <h3 className="text-lg font-bold text-neutral-900 mb-2">{step.title}</h3>
-              <p className="text-sm text-neutral-500 leading-[1.6]">{step.description}</p>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
