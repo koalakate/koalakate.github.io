@@ -24,23 +24,25 @@ jobs:
           node-version: '20'
           cache: npm
       - run: npm ci
-      # Build under the /antares-preview GitHub Pages subpath.
+      # Build under the /preview GitHub Pages subpath. (Was /antares-preview,
+      # but GitHub Pages pinned that path's index.html to a stale artifact and
+      # would not release it; a fresh path avoids the stuck cache.)
       - run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /antares-preview
-      # Next's static export keeps files at out/ root; nest them under
-      # antares-preview/ so the artifact serves at /antares-preview/, and add a
-      # root redirect so the bare domain forwards there instead of 404ing.
+          NEXT_PUBLIC_BASE_PATH: /preview
+      # Next's static export keeps files at out/ root; nest them under preview/
+      # so the artifact serves at /preview/, and add a root redirect so the bare
+      # domain forwards there instead of 404ing.
       - name: Assemble site
         run: |
-          mkdir -p site/antares-preview
-          cp -r out/. site/antares-preview/
+          mkdir -p site/preview
+          cp -r out/. site/preview/
           cat > site/index.html <<'EOF'
           <!doctype html>
           <meta charset="utf-8">
-          <meta http-equiv="refresh" content="0; url=./antares-preview/">
+          <meta http-equiv="refresh" content="0; url=./preview/">
           <title>Antares</title>
-          <a href="./antares-preview/">Continue to the Antares preview →</a>
+          <a href="./preview/">Continue to the Antares preview →</a>
           EOF
       - uses: actions/upload-pages-artifact@v3
         with:
