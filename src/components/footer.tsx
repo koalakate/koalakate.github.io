@@ -30,14 +30,6 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={withBase("/partners")}
-                  className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
-                >
-                  Partners
-                </a>
-              </li>
-              <li>
-                <a
                   href="mailto:hello@getantares.io"
                   className="text-sm text-neutral-500 no-underline hover:text-neutral-900 transition-colors"
                 >

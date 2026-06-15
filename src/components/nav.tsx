@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AntaresLogo } from "@/components/ui/logo";
 import { useContactModal } from "@/lib/contact-modal-context";
-import { VENDOR_NAV } from "@/lib/vendors";
-import { withBase } from "@/lib/base-path";
 
 const LEFT_LINKS = [
   { href: "/analyzer", label: "Analyzer" },
@@ -13,14 +11,12 @@ const LEFT_LINKS = [
 ];
 const RIGHT_LINKS = [
   { href: "/migration-library", label: "Migration Library" },
-  { href: "/partners", label: "Partners" },
   { href: "/#pricing", label: "Pricing" },
 ];
 const MOBILE_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
-  const [platformsOpen, setPlatformsOpen] = useState(false);
   const { openModal } = useContactModal();
 
   useEffect(() => {
@@ -51,48 +47,6 @@ export function Nav() {
                 <Link href={link.href} className={linkClass}>{link.label}</Link>
               </li>
             ))}
-
-            {/* Platforms dropdown */}
-            <li
-              className="relative"
-              onMouseEnter={() => setPlatformsOpen(true)}
-              onMouseLeave={() => setPlatformsOpen(false)}
-            >
-              <button
-                className={`inline-flex items-center gap-1 cursor-pointer ${linkClass}`}
-                aria-expanded={platformsOpen}
-                aria-haspopup="true"
-                onClick={() => setPlatformsOpen((v) => !v)}
-              >
-                Platforms
-                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" className={`transition-transform ${platformsOpen ? "rotate-180" : ""}`}>
-                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              {platformsOpen && (
-                <div className="absolute left-0 top-full pt-3">
-                  <div className="w-64 bg-white border border-neutral-200 rounded-xl shadow-[0_12px_48px_rgba(0,0,0,0.12)] p-2">
-                    {VENDOR_NAV.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-neutral-50 transition-colors"
-                        onClick={() => setPlatformsOpen(false)}
-                      >
-                        <span className="flex items-center justify-center w-9 h-9 rounded-md bg-neutral-50 border border-neutral-200 shrink-0">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={withBase(item.logo)} alt="" className="h-4 w-auto" />
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block text-sm font-semibold text-neutral-900">{item.label}</span>
-                          <span className="block text-xs text-neutral-500">{item.product}</span>
-                        </span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </li>
 
             {RIGHT_LINKS.map((link) => (
               <li key={link.href}>
@@ -155,22 +109,6 @@ export function Nav() {
               className="text-[2.4rem] font-bold text-neutral-900 leading-none tracking-[-0.03em] border-b border-neutral-100 py-4"
             >
               {link.label}
-            </Link>
-          ))}
-
-          {/* Platforms group */}
-          <p className="text-xs font-bold tracking-[0.12em] uppercase text-neutral-400 pt-6 pb-3">Platforms</p>
-          {VENDOR_NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 border-b border-neutral-100 py-3.5"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={withBase(item.logo)} alt="" className="h-6 w-auto shrink-0" />
-              <span className="text-[1.5rem] font-bold text-neutral-900 tracking-[-0.02em]">{item.label}</span>
-              <span className="ml-auto text-sm text-neutral-500">{item.product}</span>
             </Link>
           ))}
         </nav>
