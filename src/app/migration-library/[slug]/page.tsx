@@ -78,7 +78,7 @@ export default async function ArticlePage({ params }: Props) {
                   [&_strong]:text-neutral-900 [&_strong]:font-semibold
                   [&_code]:bg-neutral-100 [&_code]:text-neutral-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
                   [&_pre]:bg-neutral-950 [&_pre]:text-neutral-100 [&_pre]:rounded-xl [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:my-6
-                  [&_pre_code]:bg-transparent [&_pre_code]:p-0
+                  [&_pre_code]:bg-transparent [&_pre_code]:text-neutral-100 [&_pre_code]:p-0 [&_pre_code]:text-[0.9rem]
                   [&_ul]:my-4 [&_ul]:pl-5 [&_li]:mb-1.5 [&_li]:text-neutral-700 [&_li]:leading-[1.6]
                   [&_ol]:my-4 [&_ol]:pl-5
                   [&_table]:w-full [&_table]:text-sm [&_table]:my-6 [&_table]:border-collapse
